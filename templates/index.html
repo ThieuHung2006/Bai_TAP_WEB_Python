@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="page-title">Danh sách lời nhắn</h1>
+
+    {% if entries %}
+        <div class="entries-list">
+            {% for entry in entries %}
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="entry-name">{{ entry.name }}</h3>
+                        <form action="{{ url_for('delete', id=entry.id) }}" method="POST" class="delete-form">
+                            <button type="submit" class="btn-delete">Xóa</button>
+                        </form>
+                    </div>
+                    <p class="entry-message">{{ entry.message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card empty-state">
+            <p>Chưa có lời nhắn nào.</p>
+        </div>
+    {% endif %}
+{% endblock %}
