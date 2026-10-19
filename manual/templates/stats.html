@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="page-title">Thống kê lời nhắn</h1>
+
+    <div class="card">
+        <h2>Tổng số lời nhắn: <span style="color: #3498db;">{{ total_messages }}</span></h2>
+    </div>
+
+    <div class="card">
+        <h3>Top 5 người gửi nhiều lời nhắn nhất</h3>
+        {% if top_senders %}
+            <ol style="margin-left: 20px; margin-top: 10px;">
+                {% for name, count in top_senders %}
+                    <li style="margin-bottom: 6px;">
+                        <strong>{{ name }}</strong>: {{ count }} lời nhắn
+                    </li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <p style="color: #777; margin-top: 10px;">Chưa có dữ liệu thống kê.</p>
+        {% endif %}
+    </div>
+
+    <div class="card" style="text-align: center;">
+        <h3 style="margin-bottom: 15px;">Biểu đồ số lượng lời nhắn theo người gửi</h3>
+        <img src="{{ url_for('static', filename='stats.png') }}?t={{ timestamp }}" 
+             alt="Biểu đồ thống kê lời nhắn" 
+             style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+    </div>
+{% endblock %}

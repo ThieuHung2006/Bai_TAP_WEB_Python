@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Thống Kê & Đồ Thị - Sổ Lưu Bút (Vibe Code){% endblock %}
+
+{% block content %}
+    <!-- Page Header -->
+    <div style="margin-bottom: 28px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px;">
+        <div>
+            <h1 style="font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em;">📊 Phân Tích & Thống Kê</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Tổng quan hoạt động và biểu đồ phân bố lời nhắn trong sổ lưu bút.</p>
+        </div>
+        <div>
+            <a href="{{ url_for('export_data') }}" class="btn-outline" style="font-size: 0.88rem; padding: 10px 16px;" id="btn-export-json">
+                📥 Tải dữ liệu data.json
+            </a>
+        </div>
+    </div>
+
+    <!-- 4 KPI Metrics Overview -->
+    <section class="stats-overview">
+        <div class="stat-card glass">
+            <div class="stat-icon">💬</div>
+            <div class="stat-number">{{ total_messages }}</div>
+            <div class="stat-label">Tổng số lời nhắn</div>
+        </div>
+
+        <div class="stat-card glass">
+            <div class="stat-icon">👥</div>
+            <div class="stat-number">{{ unique_senders }}</div>
+            <div class="stat-label">Người gửi đã tham gia</div>
+        </div>
+
+        <div class="stat-card glass">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-number" style="font-size: 1.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ top_contributor }}">
+                {{ top_contributor }}
+            </div>
+            <div class="stat-label">Tích cực nhất</div>
+        </div>
+
+        <div class="stat-card glass">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-number" style="font-size: 1.5rem; color: #10b981;">SQLite + JSON</div>
+            <div class="stat-label">Trạng thái lưu trữ DB</div>
+        </div>
+    </section>
+
+    <!-- Details Section: Top 5 & Matplotlib Chart -->
+    <section class="stats-grid-details">
+        <!-- Top 5 Leaderboard -->
+        <div class="panel-card glass">
+            <h2 class="panel-title">🏆 Top 5 Người Gửi Nhiều Nhất</h2>
+            <p class="panel-subtitle">Bảng xếp hạng đóng góp theo số lượng lời nhắn đã ghi.</p>
+
+            {% if top_senders %}
+                <ul class="leaderboard-list">
+                    {% for name, count in top_senders %}
+                        {% set percentage = ((count / total_messages) * 100) if total_messages > 0 else 0 %}
+                        <li class="leaderboard-item">
+                            <div class="rank-badge {% if loop.index == 1 %}rank-1{% elif loop.index == 2 %}rank-2{% elif loop.index == 3 %}rank-3{% endif %}">
+                                {% if loop.index == 1 %}🥇
+                                {% elif loop.index == 2 %}🥈
+                                {% elif loop.index == 3 %}🥉
+                                {% else %}{{ loop.index }}
+                                {% endif %}
+                            </div>
+
+                            <div class="user-progress-wrap">
+                                <div class="user-top-row">
+                                    <strong style="color: var(--text-main);">{{ name }}</strong>
+                                    <span style="color: var(--accent); font-weight: 700;">{{ count }} lời nhắn</span>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-fill" style="width: {{ percentage }}%;"></div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div style="text-align: center; padding: 40px 20px; color: var(--text-dim);">
+                    <p>Chưa có dữ liệu người gửi nào.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Matplotlib Chart Panel -->
+        <div class="panel-card glass chart-container">
+            <div style="text-align: left; margin-bottom: 16px;">
+                <h2 class="panel-title">📈 Biểu Đồ Cột Matplotlib</h2>
+                <p class="panel-subtitle">Minh họa số lượng lời nhắn theo từng người gửi (Render trực tiếp bằng Python Matplotlib sang PNG).</p>
+            </div>
+
+            <div class="chart-wrapper">
+                <img src="{{ url_for('static', filename='stats.png') }}?t={{ timestamp }}" 
+                     alt="Biểu đồ thống kê số lượng lời nhắn theo người gửi" 
+                     class="chart-img"
+                     id="stats-chart-image">
+            </div>
+
+            <div style="margin-top: 14px; text-align: right;">
+                <span style="font-size: 0.78rem; color: var(--text-dim);">
+                    Cập nhật thời gian thực lúc {{ timestamp }}
+                </span>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Sổ Lưu Bút Kỷ Niệm - Trang Chủ (Vibe Code){% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero-card glass" id="hero-section">
+        <div class="hero-content">
+            <h1>Sổ Lưu Bút Kỷ Niệm 🚀</h1>
+            <p>Không gian lưu giữ những suy nghĩ, lời chúc và kỷ niệm đáng nhớ của các thành viên. Hãy để lại một lời nhắn dễ thương nhé!</p>
+        </div>
+        <div class="hero-stats">
+            <div class="mini-stat">
+                <div class="mini-stat-value">{{ stats.total_messages }}</div>
+                <div class="mini-stat-label">Lời nhắn</div>
+            </div>
+            <div class="mini-stat">
+                <div class="mini-stat-value">{{ stats.unique_senders }}</div>
+                <div class="mini-stat-label">Bạn bè</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toolbar: Search & Action -->
+    <div class="toolbar">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Tìm kiếm lời nhắn theo tên người gửi hoặc nội dung..." autocomplete="off">
+        </div>
+        <div class="action-buttons">
+            <a href="{{ url_for('stats') }}" class="btn-outline" id="btn-view-stats">
+                📈 Xem đồ thị
+            </a>
+            <a href="{{ url_for('add') }}" class="btn-outline" style="background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-color: rgba(139, 92, 246, 0.3);" id="btn-quick-add">
+                + Viết lời nhắn
+            </a>
+        </div>
+    </div>
+
+    <!-- Messages List -->
+    {% if entries %}
+        <div class="entries-grid" id="entries-feed">
+            {% for entry in entries %}
+                <article class="entry-card glass" 
+                         data-name="{{ entry.name }}" 
+                         data-message="{{ entry.message }}" 
+                         id="entry-{{ entry.id }}">
+                    <header class="entry-header">
+                        <div class="author-info">
+                            <div class="avatar-circle" style="background: {{ entry.avatar_color }};">
+                                {{ entry.initials }}
+                            </div>
+                            <div class="author-details">
+                                <span class="author-name">{{ entry.name }}</span>
+                                <span class="entry-time">{{ entry.formatted_date }}</span>
+                            </div>
+                        </div>
+
+                        <div class="entry-actions">
+                            <span class="entry-id-badge">#{{ entry.id }}</span>
+                            <button type="button" 
+                                    class="btn-delete-action btn-trigger-delete" 
+                                    data-url="{{ url_for('delete', id=entry.id) }}" 
+                                    data-author="{{ entry.name }}" 
+                                    id="btn-delete-{{ entry.id }}"
+                                    title="Xóa lời nhắn">
+                                🗑️ Xóa
+                            </button>
+                        </div>
+                    </header>
+
+                    <div class="entry-body">
+                        {{ entry.message }}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+
+        <!-- Search Empty State (Hidden by default, shown via JS if 0 search matches) -->
+        <div class="empty-state glass" id="search-empty-state" style="display: none; margin-top: 20px;">
+            <div class="empty-icon">🔍</div>
+            <h3 class="empty-title">Không tìm thấy kết quả phù hợp</h3>
+            <p class="empty-desc">Hãy thử tìm với từ khóa khác hoặc xóa ô tìm kiếm.</p>
+        </div>
+    {% else %}
+        <!-- Full Empty State -->
+        <div class="empty-state glass" id="initial-empty-state">
+            <div class="empty-icon">💌</div>
+            <h3 class="empty-title">Chưa có lời nhắn nào được lưu</h3>
+            <p class="empty-desc">Hãy là người đầu tiên để lại dấu ấn của bạn trong sổ lưu bút hôm nay!</p>
+            <a href="{{ url_for('add') }}" class="btn-primary" style="width: auto; display: inline-flex;">
+                ✍️ Viết lời nhắn đầu tiên
+            </a>
+        </div>
+    {% endif %}
+
+    <!-- Delete Confirmation Modal Dialog -->
+    <dialog id="delete-dialog" class="vibe-dialog">
+        <div class="dialog-content">
+            <h3>Xác nhận xóa lời nhắn</h3>
+            <p>Bạn có chắc chắn muốn xóa lời nhắn của <strong id="delete-author-name" style="color: #fff;"></strong> không? Hành động này sẽ không thể khôi phục.</p>
+            <div class="dialog-actions">
+                <button type="button" id="cancel-delete-btn" class="btn-outline">Hủy bỏ</button>
+                <form id="confirm-delete-form" method="POST" style="margin: 0;">
+                    <button type="submit" class="btn-delete-action" style="padding: 10px 18px; font-size: 0.95rem;">
+                        Đồng ý xóa
+                    </button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+{% endblock %}

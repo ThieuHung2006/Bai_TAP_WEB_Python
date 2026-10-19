@@ -1,0 +1,56 @@
+[
+  {
+    "id": 7,
+    "name": "Nguyễn Bá Hiệu",
+    "message": "hello world",
+    "created_at": "2026-10-19 13:37:41",
+    "formatted_date": "13:37 • 19/10/2026",
+    "avatar_color": "linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)",
+    "initials": "NB"
+  },
+  {
+    "id": 6,
+    "name": "Nguyễn Gia Huy",
+    "message": "Anh Bá Hiệu đẹp trai quá",
+    "created_at": "2026-10-19 13:36:39",
+    "formatted_date": "13:36 • 19/10/2026",
+    "avatar_color": "linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)",
+    "initials": "NG"
+  },
+  {
+    "id": 5,
+    "name": "Nguyễn Bá Hiệu",
+    "message": "hello world",
+    "created_at": "2026-10-19 13:35:18",
+    "formatted_date": "13:35 • 19/10/2026",
+    "avatar_color": "linear-gradient(135deg, #10b981 0%, #14b8a6 100%)",
+    "initials": "NB"
+  },
+  {
+    "id": 3,
+    "name": "Minh Tuấn",
+    "message": "Test tính năng gửi lời nhắn và thống kê đồ thị Matplotlib. Chạy ngon lành không lỗi nha anh em 👍",
+    "created_at": "2026-10-19 13:30:56",
+    "formatted_date": "13:30 • 19/10/2026",
+    "avatar_color": "linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)",
+    "initials": "MT"
+  },
+  {
+    "id": 2,
+    "name": "Thanh Thảo",
+    "message": "Giao diện glassmorphism đỉnh thật sự, màu sắc hiện đại và biểu đồ nhìn rất chuyên nghiệp! ✨",
+    "created_at": "2026-10-19 13:30:56",
+    "formatted_date": "13:30 • 19/10/2026",
+    "avatar_color": "linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)",
+    "initials": "TT"
+  },
+  {
+    "id": 1,
+    "name": "Vibe Coder",
+    "message": "Chào mừng đến với Guestbook phiên bản Vibe Code siêu mượt! Chúc các bạn làm đồ án đạt điểm A+ 🚀",
+    "created_at": "2026-10-19 13:30:56",
+    "formatted_date": "13:30 • 19/10/2026",
+    "avatar_color": "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
+    "initials": "VC"
+  }
+]

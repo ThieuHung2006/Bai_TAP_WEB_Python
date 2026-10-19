@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sổ Lưu Bút Vibe Code - Guestbook 2026{% endblock %}</title>
+    <meta name="description" content="Ứng dụng sổ lưu bút hiện đại Guestbook Vibe Code với Python, Flask, SQLite, Matplotlib và Glassmorphism UI.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="brand-wrapper" id="nav-brand-logo">
+                <div class="brand-logo">✨</div>
+                <div>
+                    <span class="brand-title">Guestbook</span>
+                    <span class="brand-badge">Vibe Code</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li>
+                        <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" id="nav-home">
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('stats') }}" class="nav-link {% if request.endpoint == 'stats' %}active{% endif %}" id="nav-stats">
+                            📊 Thống kê
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('add') }}" class="nav-link nav-btn" id="nav-add-btn">
+                            ✍️ Viết lời nhắn
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-wrapper">
+        <!-- Flash Messages (Toasts) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="toast-container" id="toast-container">
+                    {% for category, message in messages %}
+                        <div class="toast toast-{{ category }} glass">
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Modern Footer -->
+    <footer class="footer">
+        <div class="nav-container" style="justify-content: center; flex-direction: column; gap: 6px;">
+            <p><strong>Guestbook Vibe Code Edition</strong> • Python Flask & SQLite & Matplotlib</p>
+            <p style="color: var(--text-dim); font-size: 0.8rem;">Bài tập nhóm Lập trình web với Python • Buổi 1 & Buổi 2</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

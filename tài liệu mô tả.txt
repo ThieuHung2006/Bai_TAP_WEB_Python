@@ -1,0 +1,40 @@
+Bài tập nhóm - Lập trình web với Python
+
+Xây một ứng dụng web đơn giản cho phép khách ghé thăm để lại lời nhắn (guestbook),
+với chức năng:
+ Hiển thị tất cả lời nhắn đã lưu
+ Thêm lời nhắn mới qua form
+ Xóa lời nhắn theo ID
+ Có DB
+ Xây dựng bằng 2 phiên bản Vibe code + Manual
+Buổi 1. Các nhóm chỉ cần viết HTML thuần cơ bản cho Frontend. Các chức năng cụ
+thể:
+1. Route / (GET)
+o Lấy danh sách tất cả lời nhắn (từ list Python)
+o Render template index.html với biến entries
+2. Route /add (GET, POST)
+o GET: hiển thị form gồm hai input: name, message
+o POST:
+ Kiểm tra không để trống cả hai trường
+ Nếu hợp lệ: thêm vào dữ liệu, redirect về /
+ Nếu lỗi: render lại form với thông báo lỗi
+
+3. Route /delete/&lt;int:id&gt; (POST hoặc GET)
+o Xóa entry có ID tương ứng
+o Redirect về /
+4. Lưu trữ dữ liệu
+Buổi 2. Web và đồ thị
+1. Lưu và tải dữ liệu từ file
+ Khi ứng dụng khởi động, đọc dữ liệu từ file JSON (ví dụ data.json) nếu có.
+ Khi thêm hoặc xoá lời nhắn, ghi lại file JSON để dữ liệu không mất khi tắt chương
+trình.
+2. Thống kê cơ bản
+Thêm route mới /stats (GET) để hiển thị:
+ Tổng số lời nhắn đã ghi.
+ Danh sách 5 người gửi nhiều lời nhắn nhất (tính theo name).
+3. Vẽ biểu đồ bằng Matplotlib
+ Ở route /stats, hiển thị biểu đồ cột (bar chart) minh họa số lượng lời nhắn theo
+người gửi.
+
+ Biểu đồ được tạo bằng matplotlib, lưu tạm thành file PNG (ví dụ static/stats.png)
+rồi nhúng vào trang HTML.

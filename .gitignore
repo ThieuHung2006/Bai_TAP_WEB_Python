@@ -1,0 +1,18 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDE & Editor settings
+.vscode/
+.idea/
+
+# OS generated
+Thumbs.db
+Desktop.ini
+.DS_Store
